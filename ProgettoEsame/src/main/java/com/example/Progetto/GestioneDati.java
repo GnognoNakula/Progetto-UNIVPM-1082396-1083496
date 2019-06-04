@@ -86,9 +86,14 @@ public class GestioneDati {
 	   
 	   ArrayList<GareAppalti> data = new ArrayList<GareAppalti>();
 	   BufferedReader br;
+	   BufferedWriter bw;
+	   File fw;
 	   Scanner in;
 	   try {
+		   fw = new File("gay.csv");
+		   fw.createNewFile();
 		   br = new BufferedReader(new FileReader(file));
+		   bw = new BufferedWriter(new FileWriter(fw));
 		   in = new Scanner(br);
 		   String line;
 		   int index;
@@ -140,12 +145,15 @@ public class GestioneDati {
 							  Double.parseDouble(values.get(22)),Long.parseLong(values.get(23)),Long.parseLong(values.get(24)),values.get(25),values.get(26),values.get(27),values.get(28),Long.parseLong(values.get(29))
 							  ,values.get(30),values.get(31),values.get(32),values.get(33),values.get(34),values.get(35),Long.parseLong(values.get(36)),values.get(37),Long.parseLong(values.get(38)),values.get(39),values.get(40),values.get(41),values.get(42),values.get(43));  
 				   data.add(obj);
+				  
 				   for(String s : values)
-					   System.out.println(s);
+					   bw.write(s);
+				   bw.write("\n\n");
 			   }
 			   
 	      } 
 		  in.close();	
+		  bw.close();
 	   }
 	   catch(IOException e) {
 		   e.printStackTrace();
