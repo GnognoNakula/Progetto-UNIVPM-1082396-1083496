@@ -20,6 +20,8 @@ public class ProgettoEsameApplication {
 		ArrayList<String> lista = GestioneDati.getURLs();
 		File fileCSV = GestioneDati.getCSV(lista);
 		ArrayList<GareAppalti> beans = GestioneDati.getBean(fileCSV);
+		for(GareAppalti b : beans)
+			System.out.println(b.toString());
 		SpringApplication.run(ProgettoEsameApplication.class, args);
 	}
 	

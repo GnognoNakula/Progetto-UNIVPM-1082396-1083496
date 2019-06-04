@@ -81,20 +81,21 @@ public class GestioneDati {
    }
    
    public static ArrayList<GareAppalti> getBean(File file){
+	   /*
+	    * Metodo static che si occupa del parsing dei dati all'interno del bean GareAppalti. Sebbene l'utilizzo del 
+	    * comando .split() sembra migliorare l'efficienza del programma, ma si incontrano errori quando si passa alla 
+	    * fase di compilazione, dato che il file riportato è costituito da numerosi errori(tra cui presenza di numeri
+	    * con ',' all'interno, valori che risultano essere String sebbene il campo sia costituito da integer,long o 
+	    * double negli altri, ecc...).Per questo abbaimo implementato un metodo capace di rilevare se l'oggetto 
+	    * considerato sia possibile da utilizzare.
+	    */
 	   
 	   char COMMA_DELIMITER = ',';                                //Delimitatore stringhe
 	   
 	   ArrayList<GareAppalti> data = new ArrayList<GareAppalti>();
-	   BufferedReader br;
-	   BufferedWriter bw;
-	   File fw;
-	   Scanner in;
+       BufferedReader br;
 	   try {
-		   fw = new File("gay.csv");
-		   fw.createNewFile();
-		   br = new BufferedReader(new FileReader(file));
-		   bw = new BufferedWriter(new FileWriter(fw));
-		   in = new Scanner(br);
+           br = new BufferedReader(new FileReader(file));
 		   String line;
 		   int index;
 		   int dim;
@@ -102,10 +103,10 @@ public class GestioneDati {
 		   int sup;
 		   char[] stringaCar;
 		   GareAppalti obj;
-		   String attributi = in.nextLine();
+		   String attributi = br.readLine();
+		   System.out.println(attributi);
 		   ArrayList<String> values;
-		   while(in.hasNext()) { //Line è la linea che contiene gli attributi che ci servono
-			   line = in.nextLine();
+		   while((line = br.readLine()) != null) { //Line è la linea che contiene gli attributi che ci servono
 			   index = 0;
 			   values = new ArrayList<String>();
 			   while(index < (line.length() - 1)) {
@@ -117,7 +118,7 @@ public class GestioneDati {
 				   if(line.charAt(index) == COMMA_DELIMITER) {
 					   index++;
 				   }
-				   while((line.charAt(index) != COMMA_DELIMITER) && index < (line.length() -1)) {      //Index punterà alla posizione della virgola
+				   while(line.charAt(index) != COMMA_DELIMITER && index < (line.length() -1)) {      //Index punterà alla posizione della virgola
 					   index++;                                        //dim punterà,invece,alla dimensione della parola
 					   dim++;
 				   }
@@ -134,8 +135,14 @@ public class GestioneDati {
 					   values.add(supporto);
 				   }
 			   }
-			   if(values.size() == 44) {    
-				   for(int l = 0; l < 44;l++) {
+			   if(values.size() == 50) {  //Salta gli oggetti scritti male all'interno del csv[presenza delimiter != ',']
+				                          //e la presenza di numeri con virgola
+				   
+				   
+				   /*for(String s : values) 
+					   bw.write(s);
+				   bw.write("\n\n");*/
+				   for(int l = 0; l < 50;l++) {
 					   if(values.get(l) == null ) {
 						   values.set(l, "0");
 					   }
@@ -145,15 +152,11 @@ public class GestioneDati {
 							  Double.parseDouble(values.get(22)),Long.parseLong(values.get(23)),Long.parseLong(values.get(24)),values.get(25),values.get(26),values.get(27),values.get(28),Long.parseLong(values.get(29))
 							  ,values.get(30),values.get(31),values.get(32),values.get(33),values.get(34),values.get(35),Long.parseLong(values.get(36)),values.get(37),Long.parseLong(values.get(38)),values.get(39),values.get(40),values.get(41),values.get(42),values.get(43));  
 				   data.add(obj);
-				  
-				   for(String s : values)
-					   bw.write(s);
-				   bw.write("\n\n");
+				   
 			   }
 			   
 	      } 
-		  in.close();	
-		  bw.close();
+		  br.close();
 	   }
 	   catch(IOException e) {
 		   e.printStackTrace();
