@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="progetto-esame-oop">Progetto Esame OOP</h1>
+<blockquote>
+<p>Codici matricola: S1083496 S1082396<br>
+Francesco  Conte, Antonio Nakula Brigida</p>
+</blockquote>
+<h2 id="funzionalità-del-progetto">Funzionalità del progetto</h2>
+<p>Il seguente programma, come da specifiche di progetto, scarica i dataset da file .csv più grande, effettua il parsing dei dati e metadati ed implementa la loro serializzazione. Il programma si occupa anche di implementare le risposte alle richieste dell’utente (ritorno dei dati, metadati, statistiche con relativi filtraggi).</p>
+<h2 id="download-e-configurazione">Download e configurazione</h2>
+<p>Per far partire il progetto basta scaricarlo da gitHub ed aprirlo su Eclipse.<br>
+Il programma richiede l’uso di framework e librerie esterne, quindi per far sì che compili bisogna aggiungere nel <em>ClassPath</em> il file<br>
+<em>json-simple-1.1.1.jar</em>, già presente nella directory del progetto.</p>
+<h2 id="sintassi-per-richieste-rest-api">Sintassi per richieste REST API</h2>
+<p>L’utente per poter utilizzare le funzionalità del programma, deve eseguire l’applicazione ed aprire il browser WEB. Le richieste verranno scritte come URL con la seguente sintassi:</p>
+<blockquote>
+<p><a href="http://localhost:8080/%22tipoRichiesta%22">http://localhost:8080/“tipoRichiesta”</a></p>
+</blockquote>
+<p>All’interno della query string, la string <em>tipoRichiesta</em> serve per indicare il tipo di informazione che si vuole richiedere, tra le seguenti opzioni:</p>
+<ul>
+<li><strong>dati</strong> [Ritorna la lista in formato JSON dei Bean contenuti nel data-set];</li>
+<li><strong>metadati</strong> [Ritorna la lista in formato JSON dei metadati relativi agli attributi];</li>
+<li><strong>stats</strong> [Ritorna le statistiche in formato JSON relative ad un attributo(varia a seconda del tipo)].</li>
+</ul>
+<p>Per poter ricevere statistiche relative ad un attributo bisogna specificarlo con la seguente sintassi:</p>
+<blockquote>
+<p><a href="http://localhost:8080/stats?attributo=%22nomeAttributo%22">http://localhost:8080/stats?attributo=“nomeAttributo”</a></p>
+</blockquote>
+<p>in cui <em>nomeAttributo</em> è il nome dell’attributo.<br>
+esempio:</p>
+<blockquote>
+<p><a href="http://localhost:8080/stats?attributo=tipoGara">http://localhost:8080/stats?attributo=tipoGara</a></p>
+</blockquote>
+<p>Per la richiesta di dati e statistiche, è possibile usufruire del filtraggio dati, per poter restituire dati con le proprie specifiche. I tipi di filtri disponibili sono i seguenti:</p>
+<ul>
+<li><em><strong>$eq</strong></em> : questo filtro permette di selezionare oggetti con attributo specificato con valore uguale a quello richiesto;</li>
+<li><em><strong>$not</strong></em> : questo filtro permette di selezionare oggetti con attributo specificato con valore diverso da quello richiesto;</li>
+<li><em><strong>$or</strong></em> : questo filtro permette di selezionare oggetti con attributo specificato uguale a quelli richiesti (l’utente dovrà, in questo caso, inserire due valori);</li>
+<li><em><strong>$mag</strong></em> : questo filtro permette di selezionare oggetti con attributo numerico specificato con valore maggiore di quello richiesto;</li>
+<li><em><strong>$min</strong></em> : questo filtro permette di selezionare oggetti con attributo numerico specificato con valore minore di quello richiesto;</li>
+</ul>
+<p>Nella query string, quindi, l’utente dovrà specificare vari parametri (di cui l’ordine non è importante) a seconda del filtro utilizzato (se si utilizzano filtri per attributi di tipo numerico, non si possono selezonare attributi di tipo String ecc…).<br>
+Un esempio di richiesta dati con filtro “$eq” è:</p>
+<blockquote>
+<p><a href="http://localhost:8080/dati?attributo=npgAttoAutorizzativo&amp;filter=$eq&amp;val1=356706">http://localhost:8080/dati?attributo=npgAttoAutorizzativo&amp;filter=$eq&amp;val1=356706</a></p>
+</blockquote>
+<p>Nel precedente esempio, la richiesta dati è stata filtrata cercando solo oggetti con attributo <em>npgAttoAutorizzativo</em> uguale al valore <em>356706</em>.</p>
+<blockquote>
+<p>Nota: L’attributo <em>val2</em> viene utilizzato esclusivamente nel caso del filtro <em>$or</em> che richiede due valori. Tutti gli altri filtri adoperano solo ed esclusivamente l’attributo <em>val1</em>.</p>
+</blockquote>
+<h2 id="note-dai-programmatori">Note dai programmatori</h2>
+<p>Nell’atto dell’ultimo commit purtroppo abbiamo riscontrato un problema con git: ben 2 commit sono stati sovrascritti dal quinto e sono andati persi, ci scusiamo per l’inconveniente.</p>
+<h2 id="diagrammi-uml">Diagrammi UML</h2>
+<p><strong>Diagramma dei casi d’uso</strong></p>
+<p><img src="https://lh3.googleusercontent.com/D2zCyk46xLRuzd3JKz2eVwnI4YZidIO3miAqS796lvvwoZ1CSni_kW0ZPEQW7qzIDVsdp0ux7G4" alt="enter image description here" title="Use Case"></p>
+<p><strong>Diagramma delle classi</strong><br>
+<img src="https://lh3.googleusercontent.com/ABbFA9KdvSYa5mrdYEmUlR8zJkB7KGDgFh-ICIa17O4IRYcyfxpkFXhFW6zt1qjtyUsH5VKMtL4" alt="UML class diagram" title="UML class diagram"><br>
+<strong>Diagramma delle sequenze del main</strong></p>
+<p><img src="https://lh3.googleusercontent.com/UGX3_G3ybCect-abarpLmrYqor1JZLKKPapagN3ESwcHxNpikmlNYa5Odojd5Na4_L2xBnYID84" alt="UMLSequence Diagramma" title="UML Sequence Diagram"></p>
+<blockquote>
+<p>Nota: Le 3 immagini possono essere consultate singolarmente all’interno della cartella UML</p>
+</blockquote>
+</div>
+</body>
+
+</html>

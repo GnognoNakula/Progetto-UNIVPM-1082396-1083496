@@ -1,4 +1,4 @@
-package com.example.Progetto.Gestione;
+ package com.example.Progetto.Gestione;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
